@@ -5,13 +5,15 @@ function App() {
   const [pokemon, setPokemon] = useState([]);
   const [filter, setFilter] = useState('');
 
+  async function getPokemon() {
+    const response = await getPokemon(filter);
+    
+    setPokemon(response);
+  }
+
   useEffect(() => {
-    async function getPokemon() {
-      const response = await getPokemon(filter);
-      
-      setPokemon(response);
-    }
     getPokemon();
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   async function handleSubmit(e) {
@@ -28,7 +30,11 @@ function App() {
         <button>Search</button>
       </form>
       <div>
-        write mapping for Pokemon here
+        {pokemon.map((poke, i) => 
+          <div key={i}>
+            <h2>{poke.pokemon}</h2>
+          </div>
+        )}
       </div>
     </div>
   );
