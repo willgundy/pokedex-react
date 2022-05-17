@@ -27,8 +27,6 @@ function App() {
     loadPokemon();
   }
 
-  console.log(pokemon);
-
   return (
     <div className="App">
       <h1>Pokedex</h1>
@@ -36,7 +34,11 @@ function App() {
         <input value={filter} onChange={e => setFilter(e.target.value)}/>
         <button>Search</button>
       </form>
-      {isLoading ? <div /> : <Pokedex pokemon={pokemon} />}
+      {isLoading ?         
+        <div className='loadScreen'>
+          <div className='bounceball'/>
+          <h1>LOADING...</h1>
+        </div> : <Pokedex pokemon={pokemon} />}
     </div>
   );
 }
