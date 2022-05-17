@@ -1,13 +1,17 @@
 import { useEffect, useState } from 'react';
 import './App.css';
 import { getPokemon } from './services/fetch-utils';
+import Pokedex from './Pokedex';
 
 function App() {
   const [pokemon, setPokemon] = useState([]);
-  const [filter, setFilter] = useState('');
+  const [filter, setFilter] = useState('abra');
+  const [isLoading, setIsLoading] = useState(false);
 
   async function loadPokemon() {
+    setIsLoading(true);
     const { data } = await getPokemon(filter);
+    setIsLoading(false);
     
     setPokemon(data.results);
   }
@@ -23,27 +27,16 @@ function App() {
     loadPokemon();
   }
 
-  function capitalizeFirstLetter(pokemon) {
-    return pokemon.charAt(0).toUpperCase() + pokemon.slice(1);
-  }
-
   console.log(pokemon);
 
   return (
     <div className="App">
       <h1>Pokedex</h1>
       <form onSubmit={handleSubmit}>
-        <input onChange={e => setFilter(e.target.value)}/>
+        <input value={filter} onChange={e => setFilter(e.target.value)}/>
         <button>Search</button>
       </form>
-      <div className='cardContainer'>
-        {pokemon.map((poke, i) => 
-          <div className='card' key={poke.id + i} style={{ backgroundColor: poke.color_1 }}>
-            <h2>{capitalizeFirstLetter(poke.pokemon)}</h2>
-            <img src={poke.url_image}/>
-          </div>
-        )}
-      </div>
+      {isLoading ? <div /> : <Pokedex pokemon={pokemon} />}
     </div>
   );
 }

@@ -17,3 +17,20 @@
 .card img {
   height: 20vh;
 }
+
+.flex-column {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: center;
+}
+
+label {
+  font-weight: bolder;
+  margin-left: 5vw;
+}
+
+.attribute {
+  font-weight: 400;
+  margin-left: 20px;
+}
